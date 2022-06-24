@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState} from 'react'
 import AboutUs from './components/AboutUs'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
@@ -9,6 +9,7 @@ import Services from './components/Services'
 
 
 const Home = () => {
+  
   return (
     <>
       <Navbar />

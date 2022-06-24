@@ -3,12 +3,15 @@ import React,{ useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Navbar.css'
 import { NavLink } from 'react-router-dom'
+import {useAuthState} from 'react-firebase-hooks/auth'
+import { auth } from './Firebase'
 
 
-const Navbar = () => {
 
+const Navbar = (props) => {
+    const [user] = useAuthState(auth)
     const [show, setShow] = useState(false)
-
+    const { userLoggedIn} = props
   return (
     <>
     <section className='navbar-bg'>
@@ -42,10 +45,24 @@ const Navbar = () => {
           <NavLink className="nav-link active" to="/contact">Contact</NavLink>
         </li>
       </ul>
-      <form className="d-flex">
-        <button className="btn btn-outline-success btn-style" type="submit">SignUp</button>
-        <button className="btn btn-outline-success btn-style" type="submit">Login</button>
-      </form>
+      {
+        userLoggedIn ? (
+          <div>
+           <form className="d-flex">
+            {user?.email}
+             <NavLink className="btn btn-outline-success btn-style" type="submit" >Log Out</NavLink>
+           </form>
+          </div>
+        ) : (
+          <div>
+          <form className="d-flex">
+             <NavLink className="btn btn-outline-success btn-style" type="submit" to="/signup">SignUp</NavLink>
+             <NavLink className="btn btn-outline-success btn-style" type="submit" to="/login">Login</NavLink>
+           </form>
+          </div>
+        )
+      }
+      
     </div>
   </div>
 </nav>
